@@ -1,0 +1,107 @@
+apiVersion: database.oracle.com/v1alpha1
+kind: PDB
+metadata:
+  name: east
+  namespace: goldengate
+  labels:
+    cdb: ai23-remote-cdb
+    pdb: east
+spec:
+  cdbResName: "ai23-cloud-cdb"
+  cdbNamespace: "23aidemo"
+  cdbName: "DB23ai"
+  pdbName: "east"
+  adminName:
+    secret:
+      secretName: "pdb-secret"
+      key: "sysadmin_user"
+  adminPwd:
+    secret:
+      secretName: "pdb-secret"
+      key: "sysadmin_pwd"
+  webServerPwd:
+    secret:
+      key: webserver_pwd
+      secretName: aicdb-secret
+  webServerUser:
+    secret:
+      key: webserver_user
+      secretName: aicdb-secret
+  fileNameConversions: NONE
+  totalSize: "1G"
+  tempSize: "100M"
+  action: "Create"
+  #action: "Delete"
+  #dropAction: "INCLUDING"
+  #pdbState: "OPEN"
+  #modifyOption: "READ WRITE"
+  #pdbState: "CLOSE"
+  #modifyOption: "IMMEDIATE"
+  #action: "Modify"
+  pdbTlsCat:
+    secret:
+      secretName: "db-ca"
+      key: "ca.crt"
+  pdbTlsCrt:
+    secret:
+      secretName: "db-tls"
+      key: "tls.crt"
+  pdbTlsKey:
+    secret:
+      secretName: "db-tls"
+      key: "tls.key"
+---
+apiVersion: database.oracle.com/v1alpha1
+kind: PDB
+metadata:
+  name: west
+  namespace: goldengate
+  labels:
+    cdb: cdb19c
+    pdb: west
+spec:
+  cdbResName: "cdb19c"
+  cdbNamespace: "oracle-database-operator-system"
+  cdbName: "DB19c"
+  pdbName: "west"
+  adminName:
+    secret:
+      secretName: "pdb-secret"
+      key: "sysadmin_user"
+  adminPwd:
+    secret:
+      secretName: "pdb-secret"
+      key: "sysadmin_pwd"
+  webServerPwd:
+    secret:
+      key: webserver_pwd
+      secretName: cdb19c-secret
+  webServerUser:
+    secret:
+      key: webserver_user
+      secretName: cdb19c-secret
+  fileNameConversions: NONE
+  totalSize: "1G"
+  tempSize: "100M"
+  action: "Create"
+  #action: "Delete"
+  #dropAction: "INCLUDING"
+  #pdbState: "OPEN"
+  #modifyOption: "READ WRITE"
+  #pdbState: "CLOSE"
+  #modifyOption: "IMMEDIATE"
+  #action: "Modify"
+  pdbTlsCat:
+    secret:
+      secretName: "db19c-ca"
+      key: "ca.crt"
+  pdbTlsCrt:
+    secret:
+      secretName: "db19c-tls"
+      key: "tls.crt"
+  pdbTlsKey:
+    secret:
+      secretName: "db19c-tls"
+      key: "tls.key"
+---
+
