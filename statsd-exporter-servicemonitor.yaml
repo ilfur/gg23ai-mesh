@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: gg23ai-east
+    release: prometheus
+  name: goldengate-east-observer
+  namespace: goldengate
+spec:
+  endpoints:
+    - bearerTokenSecret:
+        key: ''
+      interval: 20s
+      port: http
+      relabelings:
+        - action: replace
+          #replacement: db23ai-FREE
+          sourceLabels:
+            - __meta_kubernetes_endpoints_label_app
+          targetLabel: instance
+  namespaceSelector: {}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: statsd-exporter
+      app.kubernetes.io/name: statsd-exporter-prometheus-service

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goldengate-oracle-eastcoast
+  namespace: goldengate
+spec:
+  ports:
+  - port: 8888
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: goldengate_eastcoast
+    instance: goldengate_oracle_23.4.0
+  type: ClusterIP
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: goldengate-oracle-eastcoast
+  namespace: goldengate
+spec:
+  gateways:
+  - istio-system/http-istio-gateway
+  hosts:
+  - ggeast.141.147.33.9.nip.io
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: goldengate-oracle-eastcoast
+        port:
+          number: 8888
+
+

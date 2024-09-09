@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: statsd-mapping-config
+  namespace: goldengate
+data:
+  statsd-mapping.yaml: |+
+    mappings:
+    # usage: test_api_call.product-api.timer./v1/product
+    #- match: "statistics-replicat.*"
+    #  name: "gg_statistics_replicat"
+    #  labels:
+    #      type: "$1"
+    #- match: "receiver-service-stats.*"
+    #  name: "gg_statistics_recsrvc"
+    #  labels:
+    #      type: "$1"
+
